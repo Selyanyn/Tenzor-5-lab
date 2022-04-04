@@ -3,4 +3,6 @@
     <string name="send_message">Send message</string>
     <string name="sent_message">A message I\'ve sent!</string>
     <string name="read_message">Read message</string>
+    <string name="insert_message">Insert your message here!</string>
+    <string name="message_was_read">Message was read.</string>
 </resources>
