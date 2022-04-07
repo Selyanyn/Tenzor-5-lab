@@ -22,12 +22,9 @@ class ReceiverFragment : Fragment(R.layout.receiver_fragment) {
         val message = view.findViewById<TextView>(R.id.message_text_box)
         val messageText = arguments?.getString("message") ?: ""
 
-
-        Log.i("delta", "overdrivу")
         val viewModel = ViewModelProvider(requireActivity()).get(ReceiverViewModel::class.java)
         message.setText(messageText)
         viewModel.getMessage().observe(viewLifecycleOwner, Observer<String> { msg ->
-            Log.i("delta", msg)
             view.findViewById<TextView>(R.id.message_text_box).setText(msg)
         })
 
