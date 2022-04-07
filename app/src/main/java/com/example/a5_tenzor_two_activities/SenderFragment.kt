@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 
 class SenderFragment : Fragment(R.layout.sender_fragment) {
@@ -22,10 +24,14 @@ class SenderFragment : Fragment(R.layout.sender_fragment) {
             val fragment = ReceiverFragment()
             val bundle = Bundle();
             bundle.putString("message", textInput.text.toString())
+            ViewModelProvider(requireActivity())
+                .get(ReceiverViewModel::class.java)
+                .getMessage()
+                .removeObservers(requireActivity())
             fragment.arguments = bundle
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment, "receiverF1")
                 .addToBackStack(null)
                 .commit()
         }

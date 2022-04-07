@@ -10,16 +10,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 class ReceiverFragment : Fragment(R.layout.receiver_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         Log.i("LifecycleTag", "Receiver: onViewCreated")
         val readButton = view.findViewById<Button>(R.id.read_button)
         val message = view.findViewById<TextView>(R.id.message_text_box)
-        message.setText(arguments?.getString("message") ?: "")
+        val messageText = arguments?.getString("message") ?: ""
+
+
+        Log.i("delta", "overdrivу")
+        val viewModel = ViewModelProvider(requireActivity()).get(ReceiverViewModel::class.java)
+        message.setText(messageText)
+        viewModel.getMessage().observe(viewLifecycleOwner, Observer<String> { msg ->
+            Log.i("delta", msg)
+            view.findViewById<TextView>(R.id.message_text_box).setText(msg)
+        })
 
         readButton.setOnClickListener {
-            message.setText(getString(R.string.message_was_read))
+            viewModel.storeMessage(getString(R.string.message_was_read))
         }
     }
 
